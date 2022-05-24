@@ -34,10 +34,12 @@ describe('Post preview page', () => {
         const useRouterMocked = mocked(useRouter)
         const pushMock = jest.fn()
 
-        useSessionMocked.mockReturnValueOnce([
-            { activeSubscription: 'fake-active-subscription' },
-            false
-        ] as any)
+        useSessionMocked.mockReturnValueOnce({
+            data: {
+                activeSubscription: 'fake-active-subscription',
+                expires: 'fake-expires'
+            },
+        } as any)
 
         useRouterMocked.mockReturnValueOnce({
             push: pushMock,
@@ -45,7 +47,7 @@ describe('Post preview page', () => {
 
         render(<Post post={post} />)
 
-        expect(pushMock).toHaveBeenCalledWith('/post/my-new-post')
+        expect(pushMock).toHaveBeenCalledWith('/posts/my-new-post')
     });
 
     it('loads initial data', async () => {
@@ -73,8 +75,8 @@ describe('Post preview page', () => {
                     post: {
                         slug: 'my-new-post',
                         title: 'My new post',
-                        content: '<p>Post content</p>',
-                        updatedAt: '01 de abril de 2022'
+                        content: '<p>Post excerpt</p>',
+                        updatedAt: '01 de abril de 2021'
                     }
                 }
             })

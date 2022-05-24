@@ -26,6 +26,19 @@ describe('SignInButton component', () => {
     })
 
     it('renders correctly when user is authenticated', () => {
+        const useSessionMocked = mocked(useSession)
+
+        useSessionMocked.mockReturnValueOnce([
+            { user: {
+                name: 'John Doe',
+                email: 'john.doe@example.com'
+            },
+            expires: 'fake-expires',
+            activeSubscription: 'fake-active-subscription'
+            },
+        false,
+        ] as any)
+
         render( <SignInButton /> )
        
         expect(screen.getByText('Sign in with Github')).toBeInTheDocument()        

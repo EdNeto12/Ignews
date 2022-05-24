@@ -21,9 +21,13 @@ describe('SubscribeButton component', () => {
 
     it('redirects user tor sign in when not authenticated', () => {
 
+        const useSessionMocked = mocked(useSession);
+
+        useSessionMocked.mockReturnValueOnce([null, false] as any)
+
         const signInMocked = mocked(signIn)
-       
-        render(<SubscribeButton />)
+        
+        render(<SubscribeButton/>)
 
         const subscribeButton = screen.getByText('Subscribe now');
 
@@ -37,16 +41,16 @@ describe('SubscribeButton component', () => {
        const useSessionMocked = mocked(useSession)
        const pushMock = jest.fn()
 
-       useSessionMocked.mockReturnValueOnce([
-           { user: { 
-               name: 'John Doe', 
-               email: 'john.doe@example.com' 
-            }, 
-            activeSubscription: 'fake-active-subscription',
-            expires: 'fake-expires'
-            },
-           false
-       ] as any)
+       useSessionMocked.mockReturnValueOnce({
+           data: {
+               user: {
+                   name: 'John Doe',
+                   email: 'john.doe@example.com',
+               },
+               activeSubscription: 'fake-active-subscription',
+               expires: 'fake-expires'
+           },
+       } as any)
 
        useRouterMocked.mockReturnValueOnce({
            push: pushMock,

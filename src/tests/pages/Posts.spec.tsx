@@ -4,14 +4,14 @@ import Posts, { getStaticProps } from '../../pages/posts';
 import { getPrismicClient } from '../../services/prismic';
 
 const posts = [
-    { slug: 'my-new-post', title: 'My New Post', excerpt: 'Post excerpt', updatedAt: 'May 15th' }
+    { slug: 'my-new-post', title: 'My New Post', excerpt: 'Post excerpt', updatedAt: '01 de abril' }
 ];
 
 jest.mock('../../services/prismic')
 
 describe('Posts page', () => {
     it('renders correctly', () => {
-        render(<Posts posts={[posts]}/>)
+        render(<Posts posts={posts}/>)
 
         expect(screen.getByText("My New Post")).toBeInTheDocument()
     });
@@ -23,7 +23,7 @@ describe('Posts page', () => {
             query: jest.fn().mockResolvedValueOnce({
                 results: [
                     {
-                        uid: 'My-new-post',
+                        uid: 'my-new-post',
                         data: {
                             title: [
                                 { type: 'heading', text: 'My new post'}
@@ -32,7 +32,7 @@ describe('Posts page', () => {
                                 { type: 'paragraph', text: 'Post excerpt' }
                             ],
                         },
-                        last_publication_date: '15-05-2022'
+                        last_publication_date: '04-01-2021',
                     }
                 ]
             })
@@ -46,8 +46,8 @@ describe('Posts page', () => {
                     posts: [{
                         slug: 'my-new-post',
                         title: 'My new post',
-                        excerpt: 'post excerpt',
-                        updatedAt: '14 de Abril de 2022'
+                        excerpt: 'Post excerpt',
+                        updatedAt: '01 de abril de 2021'
                     }]
                 }
             })
